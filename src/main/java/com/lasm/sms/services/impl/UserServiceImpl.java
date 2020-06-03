@@ -17,7 +17,7 @@ import com.lasm.sms.shared.Utils;
 import com.lasm.sms.shared.dto.UserDto;
 
 @Service
-public class UserServiceIml implements UserService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -47,6 +47,15 @@ public class UserServiceIml implements UserService {
 		UserDto user = new UserDto();
 		BeanUtils.copyProperties(createdUser, user);
 		return user;
+	}
+
+	@Override
+	public UserDto getUserByEmail(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		if(userEntity == null) throw new UsernameNotFoundException(email);
+		UserDto userDto = new UserDto();
+		BeanUtils.copyProperties(userEntity, userDto);
+		return userDto;
 	}
 
 }

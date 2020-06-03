@@ -17,7 +17,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lasm.sms.SpringApplicationContext;
 import com.lasm.sms.requests.UserLoginRequest;
+import com.lasm.sms.services.UserService;
+import com.lasm.sms.shared.dto.UserDto;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -54,9 +57,13 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 						   .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
 						   .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
 						   .compact();
+		UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
+		UserDto userDto = userService.getUserByEmail(userName);
 		
 		response.addHeader(SecurityConstants.HEADER, SecurityConstants.TOKEN_PREFIX + token);
-		response.getWriter().write("token : "+token);
+		String objectToReturn = "{ token: '"+token+"', role: '"+userDto.getRole()+"' }";
+		response.setContentType("application/json");
+		response.getWriter().write(objectToReturn);
 	}
 
 }

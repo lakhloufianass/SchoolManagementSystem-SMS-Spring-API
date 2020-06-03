@@ -15,6 +15,10 @@ public class UserCreationRequest {
 	@Size(min = 4, message = "this field must have at least 4 characters")
 	private String lastName;
 	
+	@NotBlank(message = "this field must not be NULL or EMPTY")
+	@Size(min = 4, message = "this field must have at least 4 characters")
+	private String role;
+	
 	@NotBlank(message = "this field must not be EMPTY or NULL")
 	@Email
 	private String email;
@@ -50,6 +54,15 @@ public class UserCreationRequest {
 
 	public String getPassword() {
 		return password;
+	}
+
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setPassword(String password) {

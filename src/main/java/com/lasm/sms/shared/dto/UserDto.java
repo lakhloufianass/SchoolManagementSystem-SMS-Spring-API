@@ -10,6 +10,7 @@ public class UserDto implements Serializable{
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String role;
 	private String password;
 	private String encryptedPassword;
 	
@@ -21,6 +22,12 @@ public class UserDto implements Serializable{
 	}
 	public String getUserId() {
 		return userId;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;

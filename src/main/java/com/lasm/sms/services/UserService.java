@@ -9,4 +9,5 @@ import com.lasm.sms.shared.dto.UserDto;
 public interface UserService extends UserDetailsService{
 	
 	public UserDto createUser(UserDto userDto);
+	UserDto getUserByEmail(String email);
 }

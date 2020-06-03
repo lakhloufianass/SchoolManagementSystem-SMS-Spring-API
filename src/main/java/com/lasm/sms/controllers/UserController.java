@@ -31,7 +31,8 @@ public class UserController {
 			MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<UserCreationResponse> createUser(@RequestBody @Valid UserCreationRequest userRequest) throws Exception {
 		if (userRequest.getFirstName().isEmpty() || userRequest.getLastName().isEmpty()
-				|| userRequest.getEmail().isEmpty() || userRequest.getPassword().isEmpty())
+				|| userRequest.getEmail().isEmpty() || userRequest.getPassword().isEmpty()
+				|| userRequest.getRole().isEmpty())
 			throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userRequest, userDto);
