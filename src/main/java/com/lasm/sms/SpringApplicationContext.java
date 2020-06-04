@@ -4,6 +4,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * Class to get bean from context
+ * @author macpro
+ *
+ */
 public class SpringApplicationContext implements ApplicationContextAware {
 	
 	private static ApplicationContext CONTEXT;
