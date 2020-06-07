@@ -17,8 +17,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.lasm.sms.SpringApplicationContext;
 import com.lasm.sms.requests.UserLoginRequest;
+import com.lasm.sms.responses.UserLoginResponse;
 import com.lasm.sms.services.UserService;
 import com.lasm.sms.shared.dto.UserDto;
 
@@ -61,9 +63,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		UserDto userDto = userService.getUserByEmail(userName);
 		
 		response.addHeader(SecurityConstants.HEADER, SecurityConstants.TOKEN_PREFIX + token);
-		String objectToReturn = "{ token: '"+token+"', role: '"+userDto.getRole()+"' }";
+		
+		UserLoginResponse objectToReturn = new UserLoginResponse();
+		objectToReturn.setToken(token);
+		objectToReturn.setRole(userDto.getRole());
+		String jsonLoginResponse = new Gson().toJson(objectToReturn);
+		
 		response.setContentType("application/json");
-		response.getWriter().write(objectToReturn);
+		response.getWriter().write(jsonLoginResponse);
 	}
 
 }
